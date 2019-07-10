@@ -153,6 +153,8 @@ void problem5(){
     int size = 0;
     int* array = (int*)malloc(sizeof(int)*size);
     size=5;
+	printf("%d\n",size);
+
     for(int i=0; i<100000; i++){
         size++;
         reallocTime(array, size);
