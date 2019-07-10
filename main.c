@@ -34,6 +34,7 @@ void problem2(){
         printf("\n");
     }
 }
+//code for this function largely taken from https://www.geeksforgeeks.org/c-program-to-sort-an-array-using-pointers/
 void sort(int size, int* a){
     //ints to use for ordering stuff
     int x, y, z;
