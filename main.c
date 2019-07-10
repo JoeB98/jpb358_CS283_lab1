@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<time.h>
 /*typedef struct node{
     int data;
     struct node * next;
@@ -139,28 +140,28 @@ void problem4(){
 void add(int element, int* arr, int loc){
     arr[loc] = element;
 }
-void reallocTime(int* arr, int newSize){
-    arr = realloc(arr, (newSize+1)*sizeof(int*));
-    //arr = realloc(arr, newSize*sizeof(int*));
-}
 void removeLast(int* arr, int memSize){
     //arr = (int*)realloc(arr, sizeof(int)*(memSize-1));
 }
 int get(int* arr, int index){
     return arr[index];
 }
-void problem5(){
+void problem5(int n){
     int size = 0;
     int* array = (int*)malloc(sizeof(int)*size);
+    double total_time;
+    clock_t start, end;
     size=5;
-	printf("%d\n",size);
-
-    for(int i=0; i<100000; i++){
+    start=clock();
+    srand(time(NULL));
+    for(int i=0; i<n; i++){
         size++;
-        reallocTime(array, size);
+        array = realloc(array, size*sizeof(int));
         add(i, array, i);
     }
-    printf("%d\n",array[10000]);
+    end=clock();
+    total_time = ((double)(end-start));
+    printf("\nTotal time taken to run for %d elements is: %f",n ,total_time);
 }
 int main(){
     problem1();
@@ -170,7 +171,7 @@ int main(){
     problem3();
     printf("\n");
     //problem4();
-    problem5();
-    
+    problem5(100000);
+    problem5(200000);
     return 0;
 }
