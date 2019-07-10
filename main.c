@@ -29,7 +29,7 @@ void problem2(){
     array[8] = "objectification\0";
     array[9] = "unpronounceable\0";
     for(int i=0; i<10; i++){
-        printf("%d",array[i]);
+        printf(array[i]);
         printf("\n");
     }
 }
