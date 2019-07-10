@@ -136,9 +136,12 @@ void problem4(){
        end = end->next;
    }
 }
-void add(int element, int* arr, int memSize){
-    arr = (int*)realloc(arr, sizeof(int)*(memSize+1));
-    arr[memSize] = element;
+void add(int element, int* arr, int* memSize){
+    if(element>(*memSize)){
+        *memSize=(*memSize)+1;
+        arr =realloc(arr, (*memSize)*sizeof(int));
+    }
+    arr[*memSize] = element;
 }
 void removeLast(int* arr, int memSize){
     arr = (int*)realloc(arr, sizeof(int)*(memSize-1));
@@ -149,9 +152,8 @@ int get(int* arr, int index){
 void problem5(){
     int size = 5;
     int* array = (int*)malloc(sizeof(int)*size);
-    printf("%d\n",sizeof(array));
-    for(int i = size; i<100000; i++){
-        add(i, array, i);
+    for(int i=size; i<100000; i++){
+        add(i, array, &size);
     }
     printf("%d\n",sizeof(array));
 }
