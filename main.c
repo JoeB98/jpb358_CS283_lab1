@@ -1,5 +1,9 @@
 #include<stdio.h>
 #include<stdlib.h>
+/*typedef struct node{
+    int data;
+    struct node * next;
+} nodeL;*/
 void problem1() {
     int *array;
     array = (int*)malloc(sizeof(int)*10);
@@ -8,7 +12,6 @@ void problem1() {
         printf("%d\n",array[i]);
     }
     free(array);
-    return;
 }
 void problem2(){
     char** array = malloc(10*sizeof(char*));
@@ -29,7 +32,6 @@ void problem2(){
         printf(array[i]);
         printf("\n");
     }
-    return;
 }
 void sort(int size, int* a){
     //ints to use for ordering stuff
@@ -55,9 +57,104 @@ void problem3(){
     int size = 10;
     int arr[] = {9, 6, 0, 5, 3, 7, 4, 8, 1, 2};
     sort(size, arr);
-    return;
 }
+/*int listSort(){
+    nodeL * head = NULL;
+    head = malloc(sizeof(nodeL));
+    if(head == NULL){
+        return 1;
+    }
+    head->data = 1;
+    head->next = NULL;
+}*/
+void problem4(){
+   struct node {
+       int data;
+       struct node* next;
+   };
 
+   void sort(struct node* start){
+       if(start->data > start->next->data){
+           struct node* temp = start;
+           start = start->next;
+           start->next = temp;
+       }
+       struct node* currNode = start->next;
+       while(currNode != NULL){
+           if(currNode->data > currNode->next->data){
+               struct node* temp = currNode;
+               currNode = currNode->next;
+               currNode->next = temp;
+           }
+           currNode = currNode->next;
+       }
+       struct node* currNodeCheck = start->next;
+       while(currNodeCheck != NULL){
+           if(currNodeCheck->data > currNodeCheck->next->data){
+               sort(start);
+           }
+           currNodeCheck = currNodeCheck->next;
+       }
+   }
+   struct node first = {10};
+   struct node* firstpoint = &first;
+   struct node second = {2};
+   struct node* secondpoint = &second;
+   struct node third = {7};
+   struct node* thirdpoint = &third;
+   struct node fourth = {3};
+   struct node* fourthpoint = &fourth;
+   struct node fifth = {8};
+   struct node* fifthpoint = &fifth;
+   struct node sixth = {9};
+   struct node* sixthpoint = &sixth;
+   struct node seventh = {5};
+   struct node* seventhpoint = &seventh;
+   struct node eigth = {6};
+   struct node* eigthpoint = &eigth;
+   struct node ninth = {1};
+   struct node* ninthpoint = &ninth;
+   struct node tenth = {4};
+   struct node* tenthpoint = &tenth;
+   
+   firstpoint->next = secondpoint;
+   secondpoint->next = thirdpoint;
+   thirdpoint->next = fourthpoint;
+   fourthpoint->next = fifthpoint;
+   fifthpoint->next = sixthpoint;
+   sixthpoint->next = seventhpoint;
+   seventhpoint->next = eigthpoint;
+   eigthpoint->next = ninthpoint;
+   ninthpoint->next = tenthpoint;
+   tenthpoint->next = NULL;
+   
+   sort(firstpoint);
+   struct node* end = firstpoint;
+   while(end != NULL){
+       printf("%d", end->data);
+       printf("\n");
+       end = end->next;
+   }
+}
+void add(int element, int* arr, int memSize){
+    arr = (int*)realloc(arr, sizeof(int)*(memSize+1));
+    arr[memSize] = element;
+}
+void removeLast(int* arr, int memSize){
+    arr = (int*)realloc(arr, sizeof(int)*(memSize-1));
+}
+int get(int* arr, int index){
+    return arr[index];
+}
+void problem5(){
+    int size = 5;
+    int* array = (int*)malloc(sizeof(int)*size);
+    printf("%d\n",sizeof(array));
+    for(int i = size; i<100000; i++){
+        add(i, array, i);
+    }
+    printf("%d\n",sizeof(array));
+}
 int main(){
     problem1();
     printf("\n");
@@ -65,5 +162,8 @@ int main(){
     printf("\n");
     problem3();
     printf("\n");
+    //problem4();
+    problem5();
+    
     return 0;
 }
