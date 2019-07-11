@@ -186,7 +186,10 @@ int main(){
     problem3();
     printf("\n");
     problem4();
+    printf("\n");
     problem5(100000);
+    printf("\n");
     problem5(200000);
+    printf("\n");
     return 0;
 }
