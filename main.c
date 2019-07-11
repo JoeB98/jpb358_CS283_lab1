@@ -1,10 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<time.h>
-/*typedef struct node{
-    int data;
-    struct node * next;
-} nodeL;*/
+
 void problem1() {
     int *array;
     array = (int*)malloc(sizeof(int)*10);
@@ -60,44 +57,58 @@ void problem3(){
     int arr[] = {9, 6, 0, 5, 3, 7, 4, 8, 1, 2};
     sort(size, arr);
 }
-/*int listSort(){
-    nodeL * head = NULL;
-    head = malloc(sizeof(nodeL));
-    if(head == NULL){
-        return 1;
-    }
-    head->data = 1;
-    head->next = NULL;
-}*/
+//code worked on with Josh Kirschner jak423
 void problem4(){
+   //node keeps it's value in data and has a pointer to the next node
    struct node {
        int data;
        struct node* next;
    };
-
-   void sort(struct node* start){
+   //switches two nodes and returns the second node so the previous in the list can be linked.
+   struct node* swap2nodes(struct node* a, struct node* b){
+       struct node* bpointer = b->next;
+       b->next = a;
+       a->next = bpointer;
+       return b;
+   } 
+   struct node* sort(struct node* start){
+       //first swap is to make sure the first two nodes are in order
        if(start->data > start->next->data){
-           struct node* temp = start;
-           start = start->next;
-           start->next = temp;
+           start = swap2nodes(start, start->next);
        }
-       struct node* currNode = start->next;
-       while(currNode != NULL){
-           if(currNode->data > currNode->next->data){
-               struct node* temp = currNode;
-               currNode = currNode->next;
-               currNode->next = temp;
+       printf("\n");
+       //these are pointers to the locations of the current and last node
+       struct node** currNodePoint = &start;
+       struct node** lastNodePoint = NULL;
+       while((*currNodePoint)->next != NULL){
+           printf("%d", (*currNodePoint)->data);
+           printf(" vs ");
+           printf("%d", (*currNodePoint)->next->data);
+           printf("\n");
+           if((*currNodePoint)->data > (*currNodePoint)->next->data){
+               printf("SWAP");
+               printf("\n");
+               //this is what connects the last node to the newly swapped node
+               (*lastNodePoint)->next = swap2nodes((*currNodePoint), (*currNodePoint)->next);
            }
-           currNode = currNode->next;
+           printf("%d", (*currNodePoint)->data);
+           printf("\n");
+           lastNodePoint = currNodePoint;
+           currNodePoint = &(*currNodePoint)->next;
+           
        }
-       struct node* currNodeCheck = start->next;
-       while(currNodeCheck != NULL){
-           if(currNodeCheck->data > currNodeCheck->next->data){
+       //this checks to see if the list is fully sorted
+       //if it isn't it recursively calls the sort function again
+       struct node** currNodeCheck = &start;
+       while((*currNodeCheck)->next != NULL){
+           if((*currNodeCheck)->data > (*currNodeCheck)->next->data){
                sort(start);
            }
-           currNodeCheck = currNodeCheck->next;
+           currNodeCheck = &(*currNodeCheck)->next;
        }
+       return start;
    }
+   //setup nodes
    struct node first = {10};
    struct node* firstpoint = &first;
    struct node second = {2};
@@ -119,6 +130,7 @@ void problem4(){
    struct node tenth = {4};
    struct node* tenthpoint = &tenth;
    
+   //connect nodes
    firstpoint->next = secondpoint;
    secondpoint->next = thirdpoint;
    thirdpoint->next = fourthpoint;
@@ -130,8 +142,10 @@ void problem4(){
    ninthpoint->next = tenthpoint;
    tenthpoint->next = NULL;
    
+   //sort and list nodes
    sort(firstpoint);
-   struct node* end = firstpoint;
+   printf("\n");
+   struct node* end = ninthpoint;
    while(end != NULL){
        printf("%d", end->data);
        printf("\n");
@@ -171,7 +185,7 @@ int main(){
     printf("\n");
     problem3();
     printf("\n");
-    //problem4();
+    problem4();
     problem5(100000);
     problem5(200000);
     return 0;
